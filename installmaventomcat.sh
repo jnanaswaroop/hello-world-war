@@ -35,7 +35,7 @@ cd hello-world-war
 mvn package
 cd target
 cd ../../ 
-cp -r /hello-world-war/target/hello-world-war-1.0.0.war /opt/apache-tomcat-10.0.27/webapps/
-sh /opt/apache-tomcat-10.0.27/bin/shutdown.sh
+sudo cp -r /hello-world-war/target/hello-world-war-1.0.0.war /opt/apache-tomcat-10.0.27/webapps/
+sudo sh /opt/apache-tomcat-10.0.27/bin/shutdown.sh
 sleep 4
-sh /opt/apache-tomcat-10.0.27/bin/startup.sh
+sudo sh /opt/apache-tomcat-10.0.27/bin/startup.sh
