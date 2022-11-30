@@ -8,6 +8,7 @@ pipeline {
         sh 'pwd'
         sh 'mvn package'
         sh 'chmod 777 target'
+        sh 'whoami'
         sh 'scp -r /var/lib/jenkins/workspace/my_fourth_declarative_pipeline_diff_server/target/hello-world-war-1.0.0.war root@172.31.4.192:/opt/apache-tomcat-10.0.27/webapps/'
       }
     }
