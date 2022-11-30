@@ -2,7 +2,7 @@ pipeline {
   agent none
   stages {
     stage ('My build') {
-      agent {label 'build_server'}
+      agent {label 'build_jnana'}
       steps {
         sh 'ls'
         sh 'pwd'
