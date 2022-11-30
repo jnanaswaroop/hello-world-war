@@ -8,7 +8,7 @@ pipeline {
         sh 'pwd'
         sh 'mvn package'
         sh 'chmod 777 target'
-        sh 'scp -r target/hello-world-war-1.0.0.war jenkins@172.31.4.192:/opt/apache-tomcat-10.0.27/webapps/'
+        sh 'scp -r /var/lib/jenkins/workspace/my_fourth_declarative_pipeline_diff_server/target/hello-world-war-1.0.0.war jenkins@172.31.4.192:/opt/apache-tomcat-10.0.27/webapps/'
       }
     }
     stage ('My Deploy') {
