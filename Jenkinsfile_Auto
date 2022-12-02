@@ -1,28 +1,28 @@
 pipeline {
-  agent none
-  stages {
-    stage ('My build') {
-      agent {label 'build_jnana'}
-      steps {
-        sh 'ls'
-        sh 'pwd'
-        sh 'mvn deploy'
-        sh 'chmod 777 target'
-        sh 'whoami'
-      }
-    }
-    stage ('My Deploy') {
-      agent {label 'build_maventomcat'}
-      steps {
-        sh 'pwd'
-        sh "curl -u jnanaswaroop@gmail.com:Devops@123* -O 'https://jnanaswaroop.jfrog.io/artifactory/libs-release-local/com/efsavage/hello-world-war/2.0.0/hello-world-war-2.0.0.war'"
-        sh 'cp -r hello-world-war-2.0.0.war /opt/apache-tomcat-10.0.27/webapps/'
-        sh 'sudo sh /opt/apache-tomcat-10.0.27/bin/shutdown.sh'
-        sh 'sleep 4'
-        sh 'sudo sh /opt/apache-tomcat-10.0.27/bin/startup.sh'
-        sh 'ls'
-      }
-    }
-  }
-}  
-
+	  agent none
+	  stages {
+	    stage ('My build') {
+	      agent {label 'build_jnana'}
+	      steps {
+	        sh 'ls'
+	        sh 'pwd'
+	        sh 'echo ${BUILD_NUMBER}'
+	        sh 'mvn deploy'
+	        sh 'chmod 777 target'
+	        sh 'whoami'
+	      }
+	    }
+	    stage ('My Deploy') {
+	      agent {label 'build_maventomcat'}
+	      steps {
+	        sh 'pwd'
+	        sh "curl -u jnanaswaroop@gmail.com:Devops@123* -O 'https://jnanaswaroop.jfrog.io/artifactory/libs-release-local/com/efsavage/hello-world-war/${BUILD_NUMBER}/hello-world-war-${BUILD_NUMBER}.war'"
+	        sh 'cp -r hello-world-war-${BUILD_NUMBER}.war /opt/apache-tomcat-10.0.27/webapps/'
+	        sh 'sudo sh /opt/apache-tomcat-10.0.27/bin/shutdown.sh'
+	        sh 'sleep 4'
+	        sh 'sudo sh /opt/apache-tomcat-10.0.27/bin/startup.sh'
+	        sh 'ls'
+	      }
+	    }
+	  }
+	}  
