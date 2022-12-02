@@ -17,7 +17,7 @@ pipeline {
       steps {
         sh 'pwd'
         sh "curl -u jnanaswaroop@gmail.com:Devops@123* -O 'https://jnanaswaroop.jfrog.io/artifactory/libs-release-local/com/efsavage/hello-world-war/${BUILD_NUMBER}/hello-world-war-${BUILD_NUMBER}.war'"
-        sh 'cp -r hello-world-war-${BUILD_NUMBER} /opt/apache-tomcat-10.0.27/webapps/'
+        sh 'cp -r hello-world-war-${BUILD_NUMBER}.war /opt/apache-tomcat-10.0.27/webapps/'
         sh 'sudo sh /opt/apache-tomcat-10.0.27/bin/shutdown.sh'
         sh 'sleep 4'
         sh 'sudo sh /opt/apache-tomcat-10.0.27/bin/startup.sh'
