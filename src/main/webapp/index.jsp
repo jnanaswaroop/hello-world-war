@@ -12,7 +12,7 @@
 	<h2>6.Building hello-world-war in server node1 and Copying .war file into another server node2</h2>
 	<h2>7.Deploying hello world war script from Jenkins on another server node2 agent using declarative pipeline</h2>
 	<h2>8.Automating Deployment of hello world war script from Jenkins on another server node2 agent using declarative pipeline</h2>
-	<h2>9.Extra features added for next release 2.0.0</h2>
+	<h2>9.Extra features added for next release 2.0.1</h2>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
