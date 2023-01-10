@@ -1,26 +1,26 @@
 pipeline {
-  agent none
-  stages {
-    stage ('My build') {
-      agent {label 'build_jnana'}
-      steps {
-        sh 'ls'
-        sh 'pwd'
-        sh 'mvn package'
-        sh 'chmod 777 target'
-        sh 'whoami'
-        sh 'scp -r /home/jnana/workspace/my_fourth_declarative_pipeline_diff_server/target/hello-world-war-1.0.0.war jenkins@172.31.4.192:/opt/apache-tomcat-10.0.27/webapps/'
-      }
-    }
-    stage ('My Deploy') {
-      agent {label 'build_maventomcat'}
-      steps {
-        sh 'pwd'
-        sh 'sudo sh /opt/apache-tomcat-10.0.27/bin/shutdown.sh'
-        sh 'sleep 4'
-        sh 'sudo sh /opt/apache-tomcat-10.0.27/bin/startup.sh'
-        sh 'ls'
-      }
-    }
-  }
-}  
+    agent {label 'slave1'}
+    stages {
+        stage('my Build') {
+            steps {
+                sh 'docker build -t tomcat_build:${BUILD_NUMBER} .' 
+            }
+        }  
+        stage('publish stage') {
+            steps {
+                sh "echo ${BUILD_NUMBER}"
+                sh 'docker login -u jnanaswaroop -p SwAroo99*'
+                sh 'docker tag tomcat_build:${BUILD_NUMBER} jnanaswaroop/jnanaswarooptomcat:${BUILD_NUMBER}'
+                sh 'docker push jnanaswaroop/jnanaswarooptomcat:${BUILD_NUMBER}'
+            }
+        } 
+        stage( 'my deploy' ) {
+        agent {label 'slave2'} 
+            steps {
+               sh 'docker pull jnanaswaroop/jnanaswarooptomcat:${BUILD_NUMBER}'
+               sh 'docker rm -f mytomcat'
+               sh 'docker run -d -p 8080:8080 --name mytomcat jnanaswaroop/jnanaswarooptomcat:${BUILD_NUMBER}'
+            }
+        }    
+    } 
+}
