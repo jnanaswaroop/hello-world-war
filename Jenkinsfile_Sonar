@@ -1,0 +1,17 @@
+pipeline {
+	  agent none
+	  stages {
+	    stage ('My build') {
+	      agent any
+	      steps {
+	        sh 'ls'
+	        sh 'pwd'
+	        sh 'echo ${BUILD_NUMBER}'
+	        sh 'mvn deploy'
+	        sh 'chmod 777 target'
+	        sh 'whoami'
+	      }
+	    }
+	    
+	  }
+	}  
