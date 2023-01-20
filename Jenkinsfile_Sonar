@@ -15,3 +15,8 @@ pipeline {
 	    
 	  }
 	}  
+sonar-scanner \
+  -Dsonar.projectKey=demoapp1 \
+  -Dsonar.sources=. \
+  -Dsonar.host.url=http://18.118.30.194 \
+  -Dsonar.login=09ddf94c55176f9cd69e48b0427d2a69d6a3bbd7
