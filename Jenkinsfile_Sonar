@@ -7,7 +7,7 @@ pipeline {
 	        sh 'ls'
 	        sh 'pwd'
 	        sh 'echo ${BUILD_NUMBER}'
-	        sh 'mvn deploy'
+	        sh 'mvn package'
 	        sh 'chmod 777 target'
 	        sh 'whoami'
 	      }
