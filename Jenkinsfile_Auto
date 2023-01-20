@@ -2,8 +2,7 @@ pipeline {
 	  agent none
 	  stages {
 	    stage ('My build') {
-	      agent any
-	      #agent {label 'build_jnana'}
+	      agent {label 'build_jnana'}
 	      steps {
 	        sh 'ls'
 	        sh 'pwd'
@@ -14,8 +13,7 @@ pipeline {
 	      }
 	    }
 	    stage ('My Deploy') {
-	      agent any
-	      #agent {label 'build_maventomcat'}
+	      agent {label 'build_maventomcat'}
 	      steps {
 	        sh 'pwd'
 	        sh "curl -u jnanaswaroop@gmail.com:Devops@123* -O 'https://jnanaswaroop.jfrog.io/artifactory/libs-release-local/com/efsavage/hello-world-war/${BUILD_NUMBER}/hello-world-war-${BUILD_NUMBER}.war'"
