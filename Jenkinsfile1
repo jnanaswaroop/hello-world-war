@@ -2,17 +2,16 @@ pipeline {
     agent none
     stages {
         stage ('build') {
-            agent { label 'master' }
+            agent { label 'slave1' }
             steps {
                 sh 'pwd'
                 sh 'whoami'
                 sh 'mvn package'
-                sh 'chmod -R 777 target'
-                sh 'scp -r /var/lib/jenkins/workspace/my-declarative-pipeline-777/target/hello-world-war-null.war jenkins@172.31.5.213:/opt/tomcat/webapps/'
+                sh 'scp -r /home/jenkins/workspace/my-declarative-pipeline-777/target/hello-world-war-null.war jenkins2@172.31.5.213:/opt/tomcat/webapps/'
             }
         }
         stage ('deploy') {
-            agent { label 'slave1' }
+            agent { label 'slave2' }
             steps {
                 sh 'pwd'
                 sh 'hostname -i'
