@@ -1,0 +1,24 @@
+pipeline {
+    agent none
+    stages {
+        stage ('build') {
+            agent { label 'master' }
+            steps {
+                sh 'pwd'
+                sh 'whoami'
+                sh 'mvn package'
+                sh 'scp -r /home/jenkins/workspace/my-declarative-pipeline-777/target/hello-world-war-null.war jenkins@172.31.5.213:/opt/tomcat/webapps/'
+            }
+        }
+        stage ('deploy') {
+            agent { label 'slave1' }
+            steps {
+                sh 'pwd'
+                sh 'hostname -i'
+                sh 'sudo sh /opt/tomcat/bin/shutdown.sh'
+                sh 'sleep 2'
+                sh 'sudo sh /opt/tomcat/bin/startup.sh'
+            }
+        }
+    }
+}
