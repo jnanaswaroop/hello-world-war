@@ -4,13 +4,13 @@ pipeline {
         stage ('build') {
             steps {
                 sh 'pwd'
-                sh 'mvn package'
+                sh 'whoami'
             }
         }
         stage ('deploy') {
             steps {
                 sh 'pwd'
-                sh 'mvn deploy'
+                sh 'hostname -i'
             }
         }
     }
