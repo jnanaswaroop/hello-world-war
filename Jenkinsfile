@@ -1,26 +1,17 @@
 pipeline {
-    agent {label 'slave1'}
+    agent any
     stages {
-        stage('my Build') {
+        stage ('build') {
             steps {
-                sh 'docker build -t tomcat_build:${BUILD_NUMBER} .' 
+                sh 'pwd'
+                sh 'mvn package'
             }
-        }  
-        stage('publish stage') {
+        }
+        stage ('deploy') {
             steps {
-                sh "echo ${BUILD_NUMBER}"
-                sh 'docker login -u jnanaswaroop -p kavyaswaroop'
-                sh 'docker tag tomcat_build:${BUILD_NUMBER} jnanaswaroop/jnanaswarooptomcat:${BUILD_NUMBER}'
-                sh 'docker push jnanaswaroop/jnanaswarooptomcat:${BUILD_NUMBER}'
+                sh 'pwd'
+                sh 'mvn deploy'
             }
-        } 
-        stage( 'my deploy' ) {
-        agent {label 'slave2'} 
-            steps {
-               sh 'docker pull jnanaswaroop/jnanaswarooptomcat:${BUILD_NUMBER}'
-               sh 'docker rm -f mytomcat'
-               sh 'docker run -d -p 8080:8080 --name mytomcat jnanaswaroop/jnanaswarooptomcat:${BUILD_NUMBER}'
-            }
-        }    
-    } 
+        }
+    }
 }
