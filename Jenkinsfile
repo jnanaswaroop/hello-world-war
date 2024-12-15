@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'whoami'
-                sh "echo ${BUILD_VERSION}"
+
                 sh "docker build -t tomcatjs ."
             }
         }
@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh 'docker login -u jnanaswaroop -p kavyaswaroop'
                 sh 'docker tag tomcatjs:latest jnanaswaroop/tomcatj:2.0'
-                sh "echo ${BUILD_VERSION}"
+
                 sh "docker push jnanaswaroop/tomcatj:2.0"
             }
         }        
