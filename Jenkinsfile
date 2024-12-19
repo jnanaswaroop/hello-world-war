@@ -19,7 +19,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh "docker pull jnanaswaroop/tomcatj:latest"
-                sh 'docker rm -rf mytomcat'
+                sh 'docker rm -f mytomcat'
                 sh 'docker run -d -p 9090:8080 --name mytomcat jnanaswaroop/tomcatj:latest'
             }
         }
