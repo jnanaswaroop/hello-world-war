@@ -5,26 +5,32 @@ pipeline {
     }
 
     stages {
-        stage('initialize') {
+        stage('Checkout') {
+            steps {
+                // Ensure the Git repository is checked out
+                checkout scm
+            }
+        }
+        stage('Initialize') {
             steps {
                 script {
                     if (params.IMAGE_TAG == "unset") {
                         // Dynamically set IMAGE_TAG to the current Git commit SHA
-                        env.IMAGE_TAG = "${env.GIT_COMMIT?.take(7) ?: 'latest'}" // Use short SHA or fallback to 'latest'
+                        env.IMAGE_TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                     } else {
                         env.IMAGE_TAG = params.IMAGE_TAG
                     }
                 }
             }
         }
-        stage('build') {
+        stage('Build') {
             steps {
                 sh 'pwd'
                 sh 'whoami'
                 sh "docker build -t tomcatj:${env.IMAGE_TAG} ."
             }
         }
-        stage('publish') {
+        stage('Publish') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
@@ -33,7 +39,7 @@ pipeline {
                 sh "docker push jnanaswaroop/tomcatj:${env.IMAGE_TAG}"
             }
         }
-        stage('deploy') {
+        stage('Deploy') {
             steps {
                 sh 'pwd'
                 sh "docker pull jnanaswaroop/tomcatj:${env.IMAGE_TAG}"
