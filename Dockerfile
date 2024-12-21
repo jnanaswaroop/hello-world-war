@@ -1,12 +1,12 @@
 # Stage 1: Build the Maven project
 FROM maven:3.8.2-openjdk-8 AS build_stage
 ARG MYPATH=/swaroopdir
-WORKDIR ${PATH}
+WORKDIR ${MYPATH}
 COPY . .
 RUN mvn clean package
 
 # Stage 2: Use Tomcat to deploy the WAR file
 FROM tomcat:9.0
-ARG PATH=/swaroopdir
-COPY --from=build_stage ${PATH}/target/hello-world-war-null.war /usr/local/tomcat/webapps/
+ARG MYPATH=/swaroopdir
+COPY --from=build_stage ${MYPATH}/target/hello-world-war-null.war /usr/local/tomcat/webapps/
 
