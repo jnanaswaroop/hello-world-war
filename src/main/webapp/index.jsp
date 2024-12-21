@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>Welcome to Jnana Swaroop K R ... </title>
+<title>Welcome to Kavya Jnana Swaroop K R ... </title>
 </head>
 <body>
-	<h1>Find details about Jnana Swaroop K R ...!</h1>
+	<h1>Find details about Kavya Jnana Swaroop K R ...!</h1>
 	<h2>1.I am working as DevOps Module Lead</h2>
 	<h2>2.I am from Hassan</h2>
 	<h2>3.Currently searching for a Job</h2>
