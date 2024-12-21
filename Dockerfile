@@ -1,6 +1,6 @@
 # Stage 1: Build the Maven project
 FROM maven:3.8.2-openjdk-8 AS build_stage
-ARG PATH=/swaroopdir
+ARG MYPATH=/swaroopdir
 WORKDIR ${PATH}
 COPY . .
 RUN mvn clean package
