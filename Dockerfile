@@ -9,3 +9,4 @@ RUN mvn clean package
 FROM tomcat:9.0
 ARG PATH=/swaroopdir
 COPY --from=build_stage ${PATH}/target/hello-world-war-null.war /usr/local/tomcat/webapps/
+
