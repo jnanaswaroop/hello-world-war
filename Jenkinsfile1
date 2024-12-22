@@ -1,24 +1,37 @@
 pipeline {
-    agent none
-    stages {
-        stage ('build') {
-            agent { label 'slave1' }
-            steps {
-                sh 'pwd'
-                sh 'whoami'
-                sh 'mvn package'
-                sh 'scp -r /home/jenkins/workspace/my-declarative-pipeline-777/target/hello-world-war-null.war jenkins2@172.31.5.213:/opt/tomcat/webapps/'
-            }
-        }
-        stage ('deploy') {
-            agent { label 'slave2' }
-            steps {
-                sh 'pwd'
-                sh 'hostname -i'
-                sh 'sudo sh /opt/tomcat/bin/shutdown.sh'
-                sh 'sleep 2'
-                sh 'sudo sh /opt/tomcat/bin/startup.sh'
-            }
-        }
+    agent any
+    parameters {
+        string(name: 'IMAGE_TAG', defaultValue: "unset", description: 'Docker Image Tag')
     }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Ensure the Git repository is checked out
+                checkout scm
+            }
+        }
+        stage('Initialize') {
+            steps {
+                script {
+                    if (params.IMAGE_TAG == "unset") {
+                        // Dynamically set IMAGE_TAG to the current Git commit SHA
+                        env.IMAGE_TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    } else {
+                        env.IMAGE_TAG = params.IMAGE_TAG
+                    }
+                }
+            }
+        }
+        stage('Maven Build') {
+            agent {
+                docker {
+                    image 'maven:3.8.2-openjdk-8'
+                }
+            }
+            steps {
+              	sh 'mvn clean install'
+            }
+        }
+     }
 }
