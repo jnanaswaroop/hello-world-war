@@ -4,7 +4,7 @@ ARG MYPATH=/swaroopdir
 ARG BUILD_VERSION=1.0.0
 ENV BUILD_VERSION=${BUILD_VERSION}
 WORKDIR ${MYPATH}
-# COPY . .
+COPY . .
 RUN mvn clean package
 
 # Stage 2: Use Tomcat to deploy the WAR file
