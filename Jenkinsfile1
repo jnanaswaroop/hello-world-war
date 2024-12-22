@@ -1,28 +1,6 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'IMAGE_TAG', defaultValue: "unset", description: 'Docker Image Tag')
-    }
-
     stages {
-        stage('Checkout') {
-            steps {
-                // Ensure the Git repository is checked out
-                checkout scm
-            }
-        }
-        stage('Initialize') {
-            steps {
-                script {
-                    if (params.IMAGE_TAG == "unset") {
-                        // Dynamically set IMAGE_TAG to the current Git commit SHA
-                        env.IMAGE_TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                    } else {
-                        env.IMAGE_TAG = params.IMAGE_TAG
-                    }
-                }
-            }
-        }
         stage('Maven Build') {
             agent {
                 docker {
